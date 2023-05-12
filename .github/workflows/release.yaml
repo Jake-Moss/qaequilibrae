@@ -1,7 +1,7 @@
 name: Publish package
 
 on:
-  workflow_dispatch
+  repository_dispatch
 
 jobs:
   build:
@@ -18,6 +18,11 @@ jobs:
       - name: Install qgis-plugin-ci
         run: pip3 install qgis-plugin-ci
 
+      - name: Replace requirements
+        run: >-
+          sed -e "s/\(aequilibrae==\)\(.*\?\)\(;python_version<=\"3.9\"\)/\${{ github.event.client_payload.aeq_39_and_below_version }}\3/" \
+              -e "s/\(aequilibrae==\)\(.*\?\)\(;python_version>\"3.9\"\)/\1${{ github.event.client_payload.aeq_above_39_version }}\3/" \
+              ./qaequilibrae/requirements.txt
       # - name: Deploy plugin
       #   run: >-
       #     qgis-plugin-ci
@@ -28,7 +33,4 @@ jobs:
       - name: Create archive
         run: >-
           qgis-plugin-ci
-          package 0.9.0.1
-      #    --github-token ${{ secrets.GITHUB_TOKEN }}
-      #    --osgeo-username ${{ secrets.QGIS_PLUGIN_REPO_USER }}
-      #    --osgeo-password ${{ secrets.QGIS_PLUGIN_REPO_PASSWORD }}
+          package ${{ github.ref_name }}

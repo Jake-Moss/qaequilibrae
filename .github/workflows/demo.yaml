@@ -1,0 +1,21 @@
+name: demo
+
+on:
+  workflow_dispatch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: convictional/trigger-workflow-and-wait@v1.6.1
+        with:
+          owner: Jake-Moss
+          repo: qaequilibrae
+          github_token: ${{ secrets.GITHUB_PERSONAL_ACCESS_TOKEN }}
+          workflow_file_name: release.yml
+          ref: develop
+          wait_interval: 10
+          client_payload: '{"aeq_39_and_below_version":"a_name_up_version", "aeq_above_39_version":"another_version"}'
+          propagate_failure: true
+          wait_workflow: true

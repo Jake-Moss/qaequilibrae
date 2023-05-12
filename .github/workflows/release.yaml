@@ -28,7 +28,7 @@ jobs:
       - name: Create archive
         run: >-
           qgis-plugin-ci
-          package ${GITHUB_REF}
+          package 0.9.0.1
       #    --github-token ${{ secrets.GITHUB_TOKEN }}
       #    --osgeo-username ${{ secrets.QGIS_PLUGIN_REPO_USER }}
       #    --osgeo-password ${{ secrets.QGIS_PLUGIN_REPO_PASSWORD }}

@@ -1,7 +1,18 @@
 name: Publish package
 
 on:
-  workflow_dispatch
+  workflow_dispatch:
+    inputs:
+      aeq_39_and_below_version:
+        description: 'AequilibraE version for Python 3.9 and below'
+        required: true
+        default: '0.9.1.dev0'
+        type: string
+      aeq_above_39_version:
+        description: 'AequilibraE version for above Python 3.9'
+        required: true
+        default: '0.9.1'
+        type: string
 
 jobs:
   build:
@@ -20,8 +31,8 @@ jobs:
 
       - name: Replace requirements
         run: >-
-          sed -e "s/\(aequilibrae==\)\(.*\?\)\(;python_version<=\"3.9\"\)/\${{ github.event.client_payload.aeq_39_and_below_version }}\3/" \
-              -e "s/\(aequilibrae==\)\(.*\?\)\(;python_version>\"3.9\"\)/\1${{ github.event.client_payload.aeq_above_39_version }}\3/" \
+          sed -e "s/\(aequilibrae==\)\(.*\?\)\(;python_version<=\"3.9\"\)/\${{ inputs.aeq_39_and_below_version }}\3/" \
+              -e "s/\(aequilibrae==\)\(.*\?\)\(;python_version>\"3.9\"\)/\1${{ inputs.aeq_above_39_version }}\3/" \
               ./qaequilibrae/requirements.txt
       # - name: Deploy plugin
       #   run: >-

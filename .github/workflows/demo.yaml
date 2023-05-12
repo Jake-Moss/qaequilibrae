@@ -12,7 +12,7 @@ jobs:
         with:
           owner: Jake-Moss
           repo: qaequilibrae
-          github_token: ${{ secrets.GITHUB_PERSONAL_ACCESS_TOKEN }}
+          github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           workflow_file_name: release.yml
           ref: develop
           wait_interval: 10
